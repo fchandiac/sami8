@@ -24,5 +24,5 @@ export class CreateUserDto {
 
   @IsString()
   role?: string;
-    dto: { userName: any; name: any; email: any; password: any; role: any; };
+
 }

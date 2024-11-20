@@ -22,6 +22,9 @@ export class User {
   @Column({ default: 'user' })
   role: string;
 
+  @Column({default: ''})
+  workCommerce: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

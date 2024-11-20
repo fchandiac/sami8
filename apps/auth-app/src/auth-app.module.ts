@@ -10,7 +10,7 @@ import { AuthAppController } from './auth-app.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Commerce, PaymentMethod]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: envs.database.host,
