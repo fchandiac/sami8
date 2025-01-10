@@ -41,8 +41,6 @@ export default function LoginForm() {
       redirect: false, // Evita redirección automática por el método signIn
     });
 
-    console.log('response', response);
-
     // Verificar si hubo un error en la respuesta
     if (response?.error) {
       setError('Credenciales incorrectas');

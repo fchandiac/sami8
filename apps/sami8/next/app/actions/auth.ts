@@ -17,12 +17,11 @@ export const signIn = async (userName: string, password: string) => {
 
 
 export const findUserByEmail = async (email: string) => {
-  const response = await fetch(`${authUrl}/findUserByEmail`, {
-    method: 'POST',
+  const response = await fetch(`${authUrl}/findUserByEmail?email=${email}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email }),
   });
 
   return response.json();

@@ -26,6 +26,7 @@ interface EnvVars {
     DATABASE_USER: string;
     DATABASE_PASSWORD: string;
     AUTH_DATABASE_NAME: string;
+    COMMERCE_DATABASE_NAME: string;
 
 
 
@@ -41,6 +42,7 @@ const envVarsSchema: joi.ObjectSchema = joi.object({
     DATABASE_USER: joi.string().required(),
     DATABASE_PASSWORD: joi.string().required(),
     AUTH_DATABASE_NAME: joi.string().required(),
+    COMMERCE_DATABASE_NAME: joi.string().required(),
 
     
     
@@ -79,5 +81,6 @@ export const envs = {
         user: envVars.DATABASE_USER,
         password: envVars.DATABASE_PASSWORD,
         authDatabaseName: envVars.AUTH_DATABASE_NAME,
+        commerceDatabaseName: envVars.COMMERCE_DATABASE_NAME
     },
 };

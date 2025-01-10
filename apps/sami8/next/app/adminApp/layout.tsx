@@ -6,6 +6,8 @@ import { Box } from '@mui/material';
 import SideBar from './ui/SideBar';
 import { useSession } from 'next-auth/react';
 import { findUserByEmail } from '../actions/auth';
+import App from 'next/app';
+import { AppProvider } from '@/appProvider';
 
 interface LayoutProps {
   children: ReactNode;
@@ -13,44 +15,35 @@ interface LayoutProps {
 export default function layout({ children }: LayoutProps) {
   const [openSideBar, setOpenSideBar] = useState(false);
   const { data: session } = useSession();
-  const [commerces, setCommerces] = useState([]);
   const [userId, setUserId] = useState('');
 
   useEffect(() => {
-    const fetchCommerces = async () => {
-      const email = session?.user?.email;
-      if (!email) {
-        console.error('User email is undefined');
-        return;
+    const fecthUser = async () => {
+      if (session?.user?.email) {
+        const user = await findUserByEmail(session.user.email);
+        setUserId(user.id);
       }
-      const user = await findUserByEmail(email);
-      setUserId(user.id);
-      const commerces = user.commerces;
-      if (commerces) {
-        setCommerces(commerces);
-      }
-    };
-
-    if (session) {
-      fetchCommerces();
     }
+    fecthUser();
   }, [session]);
 
   return (
     <>
-      <Navbar
-        onMenuClick={() => {
-          setOpenSideBar(true);
-        }}
-      />
-      <Box sx={{ marginTop: '60px', px: 1 }}>{children}</Box>
+      <AppProvider>
+        <Navbar
+          onMenuClick={() => {
+            setOpenSideBar(true);
+          }}
+          userId={userId}
+        />
+        <Box sx={{ marginTop: '60px', px: 1 }}>{children}</Box>
 
-      <SideBar
-        open={openSideBar}
-        toggleDrawer={setOpenSideBar}
-        commerces={commerces}
-        userId={userId}
-      />
+        <SideBar
+          open={openSideBar}
+          toggleDrawer={setOpenSideBar}
+          userId={userId}
+        />
+      </AppProvider>
     </>
   );
 }

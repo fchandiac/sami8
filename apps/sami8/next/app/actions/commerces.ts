@@ -1,6 +1,6 @@
 'use server';
 
-const authUrl = process.env.NEXT_PUBLIC_AUTH_BACKEND_URL;
+const backentUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export interface Commerce {
   id: string;
@@ -11,14 +11,9 @@ export interface Commerce {
 
 // findCommerceByUserId
 
-export const findCommercesByUserId = async (userId: string) => {
-  const response = await fetch(`${authUrl}/findCommercesByUserId`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ userId }),
-  });
+//http://localhost:8001/commerce/findCommerceByUserId?userId=bd65761e-7f0c-444d-8d95-22b4c47971a4
 
+export async function findCommerceByUserId(userId: string): Promise<Commerce> {
+  const response = await fetch(`${backentUrl}/commerce/findCommerceByUserId?userId=${userId}`);
   return response.json();
-};
+}

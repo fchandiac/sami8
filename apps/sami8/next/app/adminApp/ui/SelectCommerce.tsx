@@ -13,12 +13,7 @@ export default function SelectCommerce({
 }: SelectCommerceProps) {
   return (
     <FormControl 
-    sx={{
-        width: 200,
-        minWidth: 150,
-        maxWidth: 300,
-        mt: 1,
-    }}
+    
     size='small'
     
     fullWidth>

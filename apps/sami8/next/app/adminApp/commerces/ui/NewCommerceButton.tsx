@@ -1,6 +1,7 @@
 'use client';
 import { Button, Dialog, Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import NewCommerceForm from './NewCommerceForm';
 
 export default function NewCommerceButton() {
   const [openNewCommerceDialog, setOpenNewCommerceDialog] = useState(false);
@@ -18,9 +19,7 @@ export default function NewCommerceButton() {
         onClose={() => setOpenNewCommerceDialog(false)}
       >
         <Box p={1}>
-          <Typography variant="h5" align="left" pb={2}>
-            Nuevo Comercio
-          </Typography>
+          <NewCommerceForm />
         </Box>
       </Dialog>
     </>

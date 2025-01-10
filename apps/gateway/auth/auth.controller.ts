@@ -1,10 +1,10 @@
 // apps/gateway/auth/auth.controller.ts
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateUserDto } from '../../../libs/dto/auth/user/create-user.dto';
 import { ValidateUserDto } from 'libs/dto/auth/user/validate-user.dto';
 import { SignInDto } from 'libs/dto/auth/user/sign-in.dto';
-import { CreateCommerceDto } from 'libs/dto/auth/commerce/create-commerce.dto';
+import { CreateCommerceDto } from 'libs/dto/commerce/commerce/create-commerce.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -52,31 +52,12 @@ export class AuthController {
     return this.client.send<string>({ cmd: 'sign-in' }, { dto });
   }
 
-  @Post('createCommerce')
-  async createCommerce(@Body() dto: CreateCommerceDto): Promise<string> {
-    //@ts-ignore
-    return this.client.send<string>({ cmd: 'create-commerce' }, { dto });
-    //return 'Commerce created';
-  }
-
-
-  @Post('findCommercesByUserId')
-  async findCommerceByUserId(@Body() dto: any): Promise<string> {
-    //@ts-ignore
-    return this.client.send<string>({ cmd: 'find-commerces-by-user-id' }, { dto });
-  }
-
-
-  @Get('findAllCommerces')
-  async findAllCommerces(): Promise<string> {
-    //@ts-ignore
-    return this.client.send<string>({ cmd: 'find-all-commerces' }, {});
-  }
+ 
 
    //findUserByEmail
-    @Post('findUserByEmail')
-    async findUserByEmail(@Body() dto: any): Promise<string> {
+    @Get('findUserByEmail')
+    async findUserByEmail(@Query() data:string): Promise<string> {
       //@ts-ignore
-      return this.client.send<string>({ cmd: 'find-user-by-email' }, { dto });
+      return this.client.send<string>({ cmd: 'find-user-by-email' }, { data });
     }
 }

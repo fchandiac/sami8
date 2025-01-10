@@ -36,6 +36,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
+    },
+    "commerce-app": {
+      "type": "application",
+      "root": "apps/commerce-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/commerce-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/commerce-app/tsconfig.app.json"
+      }
     }
   }
 }

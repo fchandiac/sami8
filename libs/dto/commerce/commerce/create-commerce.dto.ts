@@ -16,8 +16,7 @@ export class CreateCommerceDto {
 
   @IsString()
   @IsNotEmpty()
-  liorenToken: string;
+  identity: string;
 
-  @IsString()
-  userId: string;
+
 }
