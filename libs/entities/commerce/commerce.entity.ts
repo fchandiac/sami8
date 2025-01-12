@@ -1,28 +1,39 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, UpdateDateColumn, DeleteDateColumn, CreateDateColumn } from 'typeorm';
-
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { PaymentMethod } from './payment-method.entity';
 
 @Entity()
 export class Commerce {
-  @PrimaryGeneratedColumn('uuid')  // Usamos 'uuid' para que el id sea un UUID
+  @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column({ length: 200, nullable: false, unique: true, default: '' })
-  name: string;
-
-  @Column({ length: 50, nullable: false, unique: true, default: '' })
+  @Column({ type: 'varchar', length: 50, nullable: false, unique: true })
   identity: string;
 
-  @Column({ length: 12, nullable: false, unique: true, default: '' })
+
+  @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
+  name: string;
+
+  @Column({ type: 'varchar', length: 12, nullable: false, unique: true })
   rut: string;
 
-  @Column({ length: 400, nullable: false, default: '' })
-  address: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  address?: string;
 
-  @Column({ length: 200, nullable: false, default: '' })
-  phone: string;
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  email?: string;
 
-  @Column({ length: 200, nullable: false, default: '' })
-  email: string;
+  @Column({ type: 'varchar', length: 15, nullable: true })
+  phone?: string;
+
+  @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.commerce, { cascade: true })
+  paymentMethods: PaymentMethod[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
@@ -30,6 +41,6 @@ export class Commerce {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  @DeleteDateColumn({ type: 'timestamp' })
-  deletedAt: Date;
+  @DeleteDateColumn({ type: 'timestamp', nullable: true })
+  deletedAt: Date | null;
 }

@@ -1,4 +1,3 @@
-// app/Navbar.tsx
 'use client';
 import { useState, useEffect, use } from 'react';
 import {
@@ -15,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useAppContext } from '@/appProvider';
+import { useGlobalContext } from '@/globalContext';
 import { findCommerceByUserId } from '../../actions/commerces';
 
 interface NavbarProps {
@@ -28,19 +27,11 @@ export default function Navbar({ onMenuClick, userId }: NavbarProps) {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState('');
-  const [commerceName, setCommerceName] = useState('');
-  
-  const { commerce, setCommerce } = useAppContext();
+  const { commerce } = useGlobalContext();
 
   useEffect(() => {
-    console.log('userId:', userId);
     const fetchData = async () => {
-      const userCommerce = await findCommerceByUserId(userId);
-      setCommerceName(userCommerce.name);
-      setCommerce(userCommerce);
-
-      console.log('Commerce:', userCommerce);
-      
+      await commerce.findCommerceByUserAndSetUserComerce(userId);
     };
     fetchData();
   }, [userId]);
@@ -49,18 +40,24 @@ export default function Navbar({ onMenuClick, userId }: NavbarProps) {
     <AppBar
       position="fixed"
       sx={{
-        height: '50px',
+        height: '60px',
         //backgroundColor:  pathname === '/userApp/services' ? 'background.default' : '',
       }}
     >
-      <Toolbar>
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Typography
-
-          variant="h6"
+          fontSize={18}
+          fontWeight={300}
           component="div"
-          sx={{  color: 'white', width: '100%' }}
+          sx={{ color: 'white', width: '100%' }}
         >
-          {commerceName}
+          @{commerce.userCommerce.identity} - {commerce.userCommerce.name}
         </Typography>
 
         <Box

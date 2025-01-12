@@ -7,7 +7,7 @@ import SideBar from './ui/SideBar';
 import { useSession } from 'next-auth/react';
 import { findUserByEmail } from '../actions/auth';
 import App from 'next/app';
-import { AppProvider } from '@/appProvider';
+import { GlobalProvider } from '../../globalContext';
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,19 +17,21 @@ export default function layout({ children }: LayoutProps) {
   const { data: session } = useSession();
   const [userId, setUserId] = useState('');
 
+
   useEffect(() => {
     const fecthUser = async () => {
       if (session?.user?.email) {
         const user = await findUserByEmail(session.user.email);
         setUserId(user.id);
       }
-    }
+    };
     fecthUser();
   }, [session]);
 
   return (
     <>
-      <AppProvider>
+      <GlobalProvider>
+    
         <Navbar
           onMenuClick={() => {
             setOpenSideBar(true);
@@ -43,7 +45,7 @@ export default function layout({ children }: LayoutProps) {
           toggleDrawer={setOpenSideBar}
           userId={userId}
         />
-      </AppProvider>
+      </GlobalProvider>
     </>
   );
 }

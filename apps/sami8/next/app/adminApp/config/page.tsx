@@ -6,7 +6,11 @@ import Taxes from './ui/Taxes';
 import NewProduct from './ui/NewProduct';
 import PricesLists from './ui/PricesLists';
 
+
 export default function ConfigPage() {
+
+
+
   return (
     <>
       <Grid container spacing={1} direction={'row'} p={1}>
@@ -26,17 +30,17 @@ export default function ConfigPage() {
         </Grid>
         <Grid item>
           <Box p={1} boxShadow={2} borderRadius={1} m={1} bgcolor={'#ffffff'}>
-            <Taxes />
+            {/* <Taxes /> */}
           </Box>
         </Grid>
         <Grid item>
           <Box p={1} boxShadow={2} borderRadius={1} m={1} bgcolor={'#ffffff'}>
-            <NewProduct />
+            {/* <NewProduct /> */}
           </Box>
         </Grid>
         <Grid item>
           <Box p={1} boxShadow={2} borderRadius={1} m={1} bgcolor={'#ffffff'}>
-            <PricesLists />
+            {/* <PricesLists /> */}
           </Box>
         </Grid>
       </Grid>

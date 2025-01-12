@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices'; // Importa ClientsModule para RabbitMQ
 import { CommerceService } from '../commerce/commerce.service';
 import { CommerceController } from '../commerce/commerce.controller';
+import { PaymentMethodController } from '../paymentMethod/payment-method.controller';
+import { PaymentMethodService } from '../paymentMethod/payment-method.service';
+  
 
 @Module({
   imports: [
@@ -38,7 +41,7 @@ import { CommerceController } from '../commerce/commerce.controller';
       },
     ]),
   ],
-  controllers: [CommerceController], // Controladores del módulo
-  providers: [CommerceService], // Servicios del módulo
+  controllers: [CommerceController, PaymentMethodController], // Controladores del módulo
+  providers: [CommerceService, PaymentMethodService], // Servicios del módulo
 })
 export class CommerceAppModule {}

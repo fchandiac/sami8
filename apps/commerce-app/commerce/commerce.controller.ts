@@ -7,7 +7,6 @@ import {
   RpcException,
 } from '@nestjs/microservices';
 import { CommerceService } from '../commerce/commerce.service';
-import { CreateCommerceDto } from '../../../libs/dto/commerce/commerce/create-commerce.dto';
 import { Commerce } from 'libs/entities/commerce/commerce.entity';
 
 @Controller()
@@ -38,5 +37,14 @@ export class CommerceController {
   ): Promise<Commerce> {
     
     return this.commerceService.findCommerceByUserId(data.userId);
+  }
+
+  //  async updateBasicInformation
+  @MessagePattern({ cmd: 'update-basic-information-commerce' })
+  async updateBasicInformation(
+    @Payload() data: any,
+    @Ctx() context: RmqContext,
+  ): Promise<Commerce> {
+    return this.commerceService.updateBasicInformation(data.dto);
   }
 }

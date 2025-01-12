@@ -10,6 +10,8 @@ import { Repository } from 'typeorm';
 import { Commerce } from 'libs/entities/commerce/commerce.entity';
 import { ByIdDto } from 'libs/dto/common/by-id.dto';
 import { CreateCommerceDto } from 'libs/dto/commerce/commerce/create-commerce.dto';
+import { UpdateBasicInformationCommerceDto } from 'libs/dto/commerce/commerce/update-basic-information-commerce.dto';
+import { PaymentMethodService } from '../paymentMethod/payment-method.service';
 
 @Injectable()
 export class CommerceService {
@@ -17,6 +19,7 @@ export class CommerceService {
     @InjectRepository(Commerce)
     private readonly commerceRepository: Repository<Commerce>,
     @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
+    private readonly paymentMethodService: PaymentMethodService,
   ) {}
 
   async health(): Promise<string> {
@@ -30,13 +33,26 @@ export class CommerceService {
       rut,
       identity,
     });
-    await this.commerceRepository.save(commerce);
-    return commerce;
+    const newCommerce = await this.commerceRepository.save(commerce);
+
+    const newPaymentMethod = await this.paymentMethodService.createPaymentMethod({
+      name: 'EfectivoAuto',
+      credit: false,
+      allowsInstallments: false,
+      maxInstallments: 0,
+      comission: 0,
+      canBeDeleted: false,
+      commerceId: newCommerce.id,
+    });
+
+    return newCommerce;
+
   }
 
   async findCommerceByUserId(userId: string): Promise<Commerce> {
-
-    const user = await this.authClient.send<string>({ cmd: 'find-user-by-id' }, { id: userId }).toPromise();
+    const user = await this.authClient
+      .send<string>({ cmd: 'find-user-by-id' }, { id: userId })
+      .toPromise();
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -46,6 +62,12 @@ export class CommerceService {
         // @ts-ignore
         id: user.commerceId,
       },
+      relations: ['paymentMethods'],
+      order: {
+        paymentMethods: {
+          createdAt: 'DESC', // O 'DESC' para orden descendente
+        },
+      },
     });
 
     if (!commerce) {
@@ -53,6 +75,25 @@ export class CommerceService {
     }
 
     return commerce;
+  }
 
+  async updateBasicInformation(
+    dto: UpdateBasicInformationCommerceDto,
+  ): Promise<Commerce> {
+    const commerce = await this.commerceRepository.findOneBy({
+      id: dto.id,
+    });
+    if (!commerce) {
+      throw new NotFoundException('Commerce not found');
+    }
+
+    const { address, phone, email } = dto;
+    commerce.address = address;
+    commerce.phone = phone;
+    commerce.email = email;
+
+    await this.commerceRepository.save(commerce);
+
+    return commerce;
   }
 }

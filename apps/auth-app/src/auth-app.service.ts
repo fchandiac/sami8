@@ -67,8 +67,6 @@ export class AuthAppService {
   }
 
   async findUserByEmail(email: string): Promise<User> {
-
-    console.log('findUserByEmail', email)
     try {
       const user = await this.userRepository.findOne({
         where: { email },

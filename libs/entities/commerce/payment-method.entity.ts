@@ -1,24 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
-
-
-
-interface IPaymentMethod {
-  id: string;
-  name: string; // efectivo, tarjeta, cheque
-  credit: boolean; // si no otorga crédito automáticamente es sin cuotas
-  allowsInstallments?: boolean; // Indica si permite cuotas
-  maxInstallments?: number; // Cantidad máxima de cuotas
-  comission?: number;
-  canBeDeleted?: boolean;
-  commerceId?: string; // ID del comercio asociado
-}
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+} from 'typeorm';
+import { Commerce } from './commerce.entity';
 
 @Entity()
 export class PaymentMethod {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type:'varchar', length:100, nullable: false })
+  @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
 
   @Column({ type: 'boolean', default: false, nullable: false })
@@ -30,16 +26,29 @@ export class PaymentMethod {
   @Column({ type: 'int', nullable: true, default: 0 })
   maxInstallments?: number;
 
-  @Column({ type: 'decimal', nullable: true, default: 0 })
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    nullable: true,
+    default: 0,
+  })
   comission?: number;
 
-
-  @Column({ type: 'boolean', nullable: true })
+  @Column({ type: 'boolean', nullable: true, default: true })
   canBeDeleted?: boolean;
 
+  @Column({ type: 'boolean', nullable: true, default: true })
+  sell: boolean;
 
-  @Column({ type: 'uuid', nullable: true })
-  commerceId?: string;
+  @Column({ type: 'boolean', nullable: true, default: true })
+  purchase: boolean;
+
+  @ManyToOne(() => Commerce, (commerce) => commerce.paymentMethods, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  commerce: Commerce;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

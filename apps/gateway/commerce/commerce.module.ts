@@ -3,6 +3,7 @@
 // apps/gateway/commerce/commerce.module.ts
 import { Module } from '@nestjs/common';
 import { CommerceController } from '../commerce/comerce.controller';
+import { PaymentMethodController } from './payment-method.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'libs/config';
 
@@ -23,6 +24,6 @@ import { envs } from 'libs/config';
       },
     ]),
   ],
-  controllers: [CommerceController], // Controlador para manejar las rutas relacionadas con commerce
+  controllers: [CommerceController, PaymentMethodController ], // Controlador para manejar las rutas relacionadas con commerce
 })
 export class CommerceModule {}

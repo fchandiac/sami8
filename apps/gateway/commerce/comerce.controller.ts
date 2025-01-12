@@ -4,6 +4,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
 import { CreateCommerceDto } from '../../../libs/dto/commerce/commerce/create-commerce.dto';
+import { UpdateBasicInformationCommerceDto } from 'libs/dto/commerce/commerce/update-basic-information-commerce.dto';
 
 @Controller('commerce')
 export class CommerceController {
@@ -39,5 +40,11 @@ export class CommerceController {
   async findAllCommerces(): Promise<string> {
     //@ts-ignore
     return this.client.send<string>({ cmd: 'find-all-commerces' }, {});
+  }
+
+  @Post('updateBasicInformation')
+  async updateBasicInformation(@Body() dto:  UpdateBasicInformationCommerceDto): Promise<string> {
+    //@ts-ignore
+    return this.commerceCliente.send<string>({ cmd: 'update-basic-information-commerce' }, { dto });
   }
 }
