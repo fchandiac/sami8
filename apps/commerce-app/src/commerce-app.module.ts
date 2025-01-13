@@ -1,19 +1,24 @@
+
 import { Module } from '@nestjs/common';
+import { CommerceService } from './commerce/commerce.service';
+import { CommerceController } from './commerce/commerce.controller';
+import { PaymentMethodController } from './paymentMethod/payment-method.controller';
+import { PaymentMethodService } from './paymentMethod/payment-method.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { Commerce } from 'libs/entities/commerce/commerce.entity';
 import { PaymentMethod } from 'libs/entities/commerce/payment-method.entity';
 import { envs } from 'libs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClientsModule, Transport } from '@nestjs/microservices'; // Importa ClientsModule para RabbitMQ
-import { CommerceService } from '../commerce/commerce.service';
-import { CommerceController } from '../commerce/commerce.controller';
-import { PaymentMethodController } from '../paymentMethod/payment-method.controller';
-import { PaymentMethodService } from '../paymentMethod/payment-method.service';
-  
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { Tax } from 'libs/entities/commerce/tax.entity';
+import { TaxService } from './tax/tax.service';
+import { TaxController } from './tax/tax.controller';
+import { PricesList } from 'libs/entities/commerce/pricesList.entity.';
+
+
 
 @Module({
-  imports: [
-    // Conexión a la base de datos
-    TypeOrmModule.forFeature([Commerce, PaymentMethod]),
+  imports: [ // Importamos los servicios
+    TypeOrmModule.forFeature([Commerce, PaymentMethod, Tax, PricesList]),  // Importamos las entidades
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: envs.database.host,
@@ -21,27 +26,29 @@ import { PaymentMethodService } from '../paymentMethod/payment-method.service';
       username: envs.database.user,
       password: envs.database.password,
       database: envs.database.commerceDatabaseName,
-      entities: [Commerce, PaymentMethod], // Asegúrate de incluir todas las entidades
+      entities: [Commerce, PaymentMethod, Tax, PricesList],
       synchronize: true,
-      //dropSchema: true, // Sólo para desarrollo; coméntalo en producción
+      //dropSchema: true,
     }),
     // Registro del cliente RabbitMQ para AUTH_SERVICE
     ClientsModule.register([
       {
-        name: 'AUTH_SERVICE', // Nombre del cliente para inyección
+        name: 'AUTH_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: [envs.rabbitmq.url], // URL de conexión a RabbitMQ
-          queue: 'auth_queue', // Cola que usa AUTH_SERVICE
+          urls: [envs.rabbitmq.url],
+          queue: 'auth_queue',
           noAck: true,
-          queueOptions: {
-            durable: true, // Cola persistente
-          },
+          queueOptions: { durable: true },
         },
       },
     ]),
   ],
-  controllers: [CommerceController, PaymentMethodController], // Controladores del módulo
-  providers: [CommerceService, PaymentMethodService], // Servicios del módulo
+  controllers: [CommerceController, PaymentMethodController, TaxController], // Aquí definimos todos los controladores
+  providers: [ CommerceService, PaymentMethodService, TaxService],
+  exports: [] // Proveedores para todos los servicios
 })
+
+
+
 export class CommerceAppModule {}

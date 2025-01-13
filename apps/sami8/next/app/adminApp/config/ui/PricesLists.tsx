@@ -21,42 +21,30 @@ import CloseIcon from '@mui/icons-material/Close';
 interface PriceList {
   id: string;
   name: string;
-  description: string;
-  canBeDeleted?: boolean;
+  canBeDeleted: boolean;
 }
 
 const initialPriceLists: PriceList[] = [
   {
     id: '1',
     name: 'Lista de precios 1',
-    description: 'Lista de precios para productos de primera necesidad',
     canBeDeleted: false,
   },
   {
     id: '2',
     name: 'Lista de precios 2',
-    description: 'Lista de precios para productos de lujo',
     canBeDeleted: true,
   },
   {
     id: '3',
     name: 'Lista de precios 3',
-    description: 'Lista de precios para productos de segunda mano',
+    canBeDeleted: true,
   },
 ];
 
 export default function PricesLists() {
   const [priceLists, setPriceLists] = useState(initialPriceLists);
 
-  const handleDelete = (id: string) => {
-    console.log(`Deleted price list with id: ${id}`);
-
-  };
-
-  const handleEdit = (id: string) => {
-    console.log(`Editing tax with id: ${id}`);
-    // Implementar lógica de edición aquí
-  };
 
   return (
     <>
@@ -67,7 +55,7 @@ export default function PricesLists() {
         <IconButton
           color="primary"
           aria-label="add"
-          onClick={() => console.log('Add new payment method')}
+          onClick={() => {}}
         >
           <AddIcon />
         </IconButton>
@@ -77,10 +65,17 @@ export default function PricesLists() {
         sx={{ marginTop: 2, border: '1px solid #ccc', borderRadius: 1 }}
       >
         <Table>
-          <TableHead>
+          <TableHead
+            sx={{
+              backgroundColor: '#f5f5f5',
+              '& > *': {
+                fontWeight: 'bold',
+              },
+            }}
+          >
             <TableRow>
               <TableCell>Nombre</TableCell>
-              <TableCell></TableCell> {/* Columna de acciones */}
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -89,27 +84,40 @@ export default function PricesLists() {
                 <TableCell>{list.name}</TableCell>
           
                 <TableCell>
-                  <IconButton
-                    onClick={() => handleEdit(list.id)}
-                    color="primary"
-                    aria-label="edit"
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end', // Alinea los íconos a la derecha
+                      gap: 1, // Añade espacio entre los íconos
+                    }}
                   >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleDelete(list.id)}
-                    disabled={!list.canBeDeleted}
-                    color="error"
-                    aria-label="delete"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                    <IconButton
+                      onClick={() => {
+                       
+                      }}
+               
+                      aria-label="edit"
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                      
+                      }}
+                      disabled={!list.canBeDeleted}
+              
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+     
     </>
   );
 }

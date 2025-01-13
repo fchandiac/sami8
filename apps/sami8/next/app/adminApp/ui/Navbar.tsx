@@ -52,12 +52,18 @@ export default function Navbar({ onMenuClick, userId }: NavbarProps) {
         }}
       >
         <Typography
-          fontSize={18}
+          fontSize={{
+            xs: 12,
+            sm: 12,
+            md: 12,
+            lg: 12,
+            xl: 12,
+          }}
           fontWeight={300}
           component="div"
           sx={{ color: 'white', width: '100%' }}
         >
-          @{commerce.userCommerce.identity} - {commerce.userCommerce.name}
+          @{commerce.userCommerce.identity}
         </Typography>
 
         <Box

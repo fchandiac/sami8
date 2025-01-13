@@ -10,21 +10,12 @@ import {
 import { Commerce } from './commerce.entity';
 
 @Entity()
-export class PaymentMethod {
+export class Tax {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
-
-  @Column({ type: 'boolean', default: false, nullable: false })
-  credit: boolean;
-
-  @Column({ type: 'boolean', default: false, nullable: true })
-  allowsInstallments?: boolean;
-
-  @Column({ type: 'int', nullable: true, default: 0 })
-  maxInstallments?: number;
 
   @Column({
     type: 'decimal',
@@ -33,7 +24,8 @@ export class PaymentMethod {
     nullable: true,
     default: 0,
   })
-  comission?: number;
+
+  percentage?: number;
 
   @Column({ type: 'boolean', nullable: true, default: true })
   canBeDeleted?: boolean;
@@ -53,7 +45,7 @@ export class PaymentMethod {
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt: Date | null;
 
-  @ManyToOne(() => Commerce, (commerce) => commerce.paymentMethods, {
+  @ManyToOne(() => Commerce, (commerce) => commerce.taxes, {
     onDelete: 'SET NULL',
     nullable: true,
   })

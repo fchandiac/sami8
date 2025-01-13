@@ -6,9 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "dev:comm": "nest start commerce-app",
     "dev:all": "nest start commerce-app --watch & nest start gateway --watch & nest start auth-app --watch & nest start sami8 --watch",
     "dev:all-no-next": "nest start gateway --watch & nest start auth-app --watch",
-    "build": "nest build",
+    "build": "nest build commerce-app",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

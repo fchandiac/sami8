@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { Repository } from 'typeorm';
 import { PaymentMethod } from 'libs/entities/commerce/payment-method.entity';
-import { CreatePaymentMethodDto } from '../../../libs/dto/commerce/paymentMethod/create-payment-method.dto';
+import { CreatePaymentMethodDto } from '../../../../libs/dto/commerce/paymentMethod/create-payment-method.dto';
 import { Commerce } from 'libs/entities/commerce/commerce.entity';
 import { UpdatePaymentMethodDto } from 'libs/dto/commerce/paymentMethod/update-payment-method.dto';
 

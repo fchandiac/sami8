@@ -38,7 +38,8 @@ export default function layout({ children }: LayoutProps) {
           }}
           userId={userId}
         />
-        <Box sx={{ marginTop: '60px', px: 1 }}>{children}</Box>
+
+        <Box sx={{ marginTop: '60px'}}>{children}</Box>
 
         <SideBar
           open={openSideBar}

@@ -12,6 +12,7 @@ import { ByIdDto } from 'libs/dto/common/by-id.dto';
 import { CreateCommerceDto } from 'libs/dto/commerce/commerce/create-commerce.dto';
 import { UpdateBasicInformationCommerceDto } from 'libs/dto/commerce/commerce/update-basic-information-commerce.dto';
 import { PaymentMethodService } from '../paymentMethod/payment-method.service';
+import { TaxService } from '../tax/tax.service';
 
 @Injectable()
 export class CommerceService {
@@ -20,6 +21,7 @@ export class CommerceService {
     private readonly commerceRepository: Repository<Commerce>,
     @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
     private readonly paymentMethodService: PaymentMethodService,
+    private readonly taxService: TaxService,
   ) {}
 
   async health(): Promise<string> {
@@ -36,11 +38,22 @@ export class CommerceService {
     const newCommerce = await this.commerceRepository.save(commerce);
 
     const newPaymentMethod = await this.paymentMethodService.createPaymentMethod({
-      name: 'EfectivoAuto',
+      name: 'Efectivo',
       credit: false,
       allowsInstallments: false,
       maxInstallments: 0,
       comission: 0,
+      canBeDeleted: false,
+      commerceId: newCommerce.id,
+      sell: true,
+      purchase: true,
+    });
+
+    const newTax = await this.taxService.createTax({
+      name: 'IVA',
+      percentage: 19,
+      sell: true,
+      purchase: true,
       canBeDeleted: false,
       commerceId: newCommerce.id,
     });
@@ -62,11 +75,14 @@ export class CommerceService {
         // @ts-ignore
         id: user.commerceId,
       },
-      relations: ['paymentMethods'],
+      relations: ['paymentMethods', 'taxes'],
       order: {
         paymentMethods: {
           createdAt: 'DESC', // O 'DESC' para orden descendente
         },
+        taxes: {
+          createdAt: 'DESC',
+        }
       },
     });
 

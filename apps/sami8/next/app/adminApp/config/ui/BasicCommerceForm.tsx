@@ -15,7 +15,6 @@ import { useGlobalContext } from '@/globalContext';
 import { updateBasicInformation } from '@/app/actions/commerces';
 import { useRouter } from 'next/navigation';
 
-
 //Json
 interface PaymentMethod {
   id: string;
@@ -45,26 +44,23 @@ interface UnitOfMeasurement {
   name: string; //unidad, kilo, litro
 }
 
-
-interface UnitOfMeasurement { // pero para el calculo de precio de venta // 
+interface UnitOfMeasurement {
+  // pero para el calculo de precio de venta //
   token: string;
   name: string; //unidad, kilo, litro
-  price: number; //precio por unidad de medida (ejemplo: 1 kilo de manzanas) 
+  price: number; //precio por unidad de medida (ejemplo: 1 kilo de manzanas)
 }
 
-interface CostAsociacdporunidad  {
+interface CostAsociacdporunidad {
   token: string;
   name: string; // manufactura, transporte, almacenaje, aduana, etc
 }
 
-
-
-
 interface commerceConfig {
-  taxes: Tax[] ; //
+  taxes: Tax[]; //
   paymentMethods: PaymentMethod[];
   pricesLists: PriceList[];
-  documents: []; //ticket //Boleta // factura ? lista ? 
+  documents: []; //ticket //Boleta // factura ? lista ?
   unitsOfMeasurement: UnitOfMeasurement[];
   liorenToken: string;
   name: string;
@@ -86,7 +82,7 @@ interface commerceConfig {
 export default function BasicCommerceForm() {
   const { commerce, showAlert } = useGlobalContext();
   const [loading, setLoading] = useState(false);
-  const  [basicInfo, setBasicInfo] = useState({
+  const [basicInfo, setBasicInfo] = useState({
     id: '',
     name: '',
     rut: '',
@@ -103,18 +99,19 @@ export default function BasicCommerceForm() {
       address: commerce.userCommerce.address || '',
       phone: commerce.userCommerce.phone || '',
       email: commerce.userCommerce.email || '',
-     
     });
   }, [commerce]);
-
-
- 
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     const { id, address, phone, email } = basicInfo;
-    const updateCommerce = await updateBasicInformation({ id, address, phone, email });
+    const updateCommerce = await updateBasicInformation({
+      id,
+      address,
+      phone,
+      email,
+    });
     commerce.updateBasicInformation(address, phone, email);
     showAlert('Información básica de comercio actualizada', 'success');
     setLoading(false);
@@ -129,6 +126,7 @@ export default function BasicCommerceForm() {
               label="Nombre del comercio"
               variant="outlined"
               value={basicInfo.name}
+              size="small"
               disabled
               name="name"
               fullWidth
@@ -145,6 +143,7 @@ export default function BasicCommerceForm() {
           <Grid item>
             <TextField
               label="Rut"
+              size="small"
               variant="outlined"
               disabled
               value={basicInfo.rut}
@@ -163,10 +162,13 @@ export default function BasicCommerceForm() {
           <Grid item>
             <TextField
               label="Dirección"
+                  size='small'
               variant="outlined"
               name="address"
               value={basicInfo.address || ''}
-              onChange={(e) => setBasicInfo({ ...basicInfo, address: e.target.value })}
+              onChange={(e) =>
+                setBasicInfo({ ...basicInfo, address: e.target.value })
+              }
               fullWidth
               required
               InputProps={{
@@ -182,16 +184,17 @@ export default function BasicCommerceForm() {
             <TextField
               label="Teléfono"
               variant="outlined"
+                  size='small'
               value={basicInfo.phone}
-              onChange={(e) => setBasicInfo({ ...basicInfo, phone: e.target.value })}
+              onChange={(e) =>
+                setBasicInfo({ ...basicInfo, phone: e.target.value })
+              }
               name="phone"
               fullWidth
               required
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">
-                   {'+56'}
-                  </InputAdornment>
+                  <InputAdornment position="start">{'+56'}</InputAdornment>
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
@@ -205,9 +208,12 @@ export default function BasicCommerceForm() {
             <TextField
               label="Email"
               variant="outlined"
+                  size='small'
               name="email"
               value={basicInfo.email}
-              onChange={(e) => setBasicInfo({ ...basicInfo, email: e.target.value })}
+              onChange={(e) =>
+                setBasicInfo({ ...basicInfo, email: e.target.value })
+              }
               fullWidth
               required
               InputProps={{
@@ -220,15 +226,11 @@ export default function BasicCommerceForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item textAlign={'right'}>
             <Button
               disabled={loading}
               variant="contained"
-              fullWidth
               type="submit"
-              sx={{
-                height: 45,
-              }}
             >
               Actualizar
             </Button>

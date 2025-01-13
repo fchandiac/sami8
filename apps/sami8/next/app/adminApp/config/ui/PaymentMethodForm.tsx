@@ -59,6 +59,14 @@ export default function PaymentMethodForm({
 
   const canBeDeleted = true;
 
+  const isChash = () => {
+    if (paymentMethod.name === 'Efectivo') {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const save = async () => {
     if (update) {
       // console.log('Updating payment method', paymentMethod);
@@ -72,7 +80,7 @@ export default function PaymentMethodForm({
           //@ts-ignore
           sell: paymentMethod.sell,
           //@ts-ignore
-          purchase: paymentMethod.purchase || true,
+          purchase: paymentMethod.purchase,
           allowsInstallments: paymentMethod.allowsInstallments,
           maxInstallments: paymentMethod.maxInstallments,
           commerceId: commerceId,
@@ -125,6 +133,8 @@ export default function PaymentMethodForm({
           <Grid item>
             <TextField
               label="Nombre"
+              name='PaymentMethodName'
+              disabled={isChash()}
               value={paymentMethod.name}
               onChange={(e) =>
                 setPaymentMethod({ ...paymentMethod, name: e.target.value })
@@ -136,6 +146,7 @@ export default function PaymentMethodForm({
           </Grid>
           <Grid item>
             <FormControlLabel
+              disabled={isChash()}
               control={
                 <Switch
                   checked={paymentMethod.credit}
@@ -152,6 +163,7 @@ export default function PaymentMethodForm({
           </Grid>
           <Grid item>
             <FormControlLabel
+              disabled={isChash()}
               control={
                 <Switch
                   checked={paymentMethod.allowsInstallments}
@@ -197,7 +209,7 @@ export default function PaymentMethodForm({
                   }
                 />
               }
-              label="Habilitado para vender"
+              label="Habilitado para ventas"
             />
           </Grid>
           <Grid item>
@@ -213,12 +225,13 @@ export default function PaymentMethodForm({
                   }
                 />
               }
-              label="Habilitado para comprar"
+              label="Habilitado para compras"
             />
           </Grid>
 
           <Grid item>
             <TextField
+              disabled={isChash()}
               label="Comisión"
               value={paymentMethod.comission}
               type="number"

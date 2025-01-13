@@ -8,6 +8,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { PaymentMethod } from './payment-method.entity';
+import { Tax } from './tax.entity';
+import { PricesList } from './pricesList.entity.';
 
 @Entity()
 export class Commerce {
@@ -32,9 +34,6 @@ export class Commerce {
   @Column({ type: 'varchar', length: 15, nullable: true })
   phone?: string;
 
-  @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.commerce, { cascade: true })
-  paymentMethods: PaymentMethod[];
-
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
@@ -43,4 +42,13 @@ export class Commerce {
 
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt: Date | null;
+
+  @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.commerce, { cascade: true })
+  paymentMethods: PaymentMethod[];
+
+  @OneToMany(() => Tax, (tax) => tax.commerce, { cascade: true })
+  taxes: Tax[];
+
+  @OneToMany(() => PricesList, (pricesList) => pricesList.commerce, { cascade: true })
+  pricesLists: PricesList[];
 }

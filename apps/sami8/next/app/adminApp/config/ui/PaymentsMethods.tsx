@@ -26,8 +26,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import HelpIcon from '@mui/icons-material/Help';
 import { useGlobalContext } from '@/globalContext';
 import { deletePymentMethod } from '@/app/actions/paymentsMethods';
-import NewPymentMethodForm from './PymentMethodForm';
-import PaymentMethodForm from './PymentMethodForm';
+import NewPymentMethodForm from './PaymentMethodForm';
+import PaymentMethodForm from './PaymentMethodForm';
 
 export default function PaymentsMethods() {
   const { commerce } = useGlobalContext();
@@ -44,7 +44,6 @@ export default function PaymentsMethods() {
     //@ts-ignore
     setPaymentMethods(commerce.userCommerce?.paymentMethods || []);
   }, [commerce]);
-
 
   const deletePymentMethodProccess = async (id: string) => {
     console.log(`Deleting payment method with id: ${id}`);
@@ -89,20 +88,38 @@ export default function PaymentsMethods() {
             }}
           >
             <TableRow>
-              <TableCell>Nombre</TableCell>
+              <TableCell
+                sx={{
+                  position: 'sticky',
+                  left: 0, // Fija la celda al lado izquierdo
+                  backgroundColor: '#f5f5f5', // Fondo fijo para evitar transparencias al desplazar
+                  zIndex: 2, // Prioridad visual sobre otras celdas
+                }}
+              >
+                Nombre
+              </TableCell>
               <TableCell>Crédito</TableCell>
               <TableCell>Cuotas</TableCell>
               <TableCell>Máx. Cuotas</TableCell>
               <TableCell>Comisión</TableCell>
-              <TableCell align="center">Venta</TableCell>
-              <TableCell align="center">Compra</TableCell>
+              <TableCell>Venta</TableCell>
+              <TableCell>Compra</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {paymentMethods.map((method) => (
               <TableRow key={method.id}>
-                <TableCell>{method.name}</TableCell>
+                <TableCell
+                  sx={{
+                    position: 'sticky',
+                    left: 0, // Fija la celda al lado izquierdo
+                    backgroundColor: '#fff', // Fondo fijo para evitar transparencias al desplazar
+                    zIndex: 2, // Prioridad visual sobre otras celdas
+                  }}
+                >
+                  {method.name}
+                </TableCell>
                 <TableCell>{method.credit ? 'Sí' : 'No'}</TableCell>
                 <TableCell>{method.allowsInstallments ? 'Sí' : 'No'}</TableCell>
                 <TableCell>
@@ -126,29 +143,33 @@ export default function PaymentsMethods() {
                   )}
                 </TableCell>
                 <TableCell>
-                  <IconButton
-                  disabled= { (method.name === 'Efectivo') ? true : false}
-                    onClick={() => {
-                      setSelectedPaymentMethod(method);
-                      setOpenUpdateDialog(true);
-                    
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end', // Alinea los íconos a la derecha
+                      gap: 1, // Añade espacio entre los íconos
                     }}
-          
-                    aria-label="edit"
                   >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => {
-                      setSelectedPaymentMethod(method);
-                      setOpenDeleteDialog(true);
-                    }}
-                    disabled={!method.canBeDeleted}
-           
-                    aria-label="delete"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setSelectedPaymentMethod(method);
+                        setOpenUpdateDialog(true);
+                      }}
+                      aria-label="edit"
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setSelectedPaymentMethod(method);
+                        setOpenDeleteDialog(true);
+                      }}
+                      disabled={!method.canBeDeleted}
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
@@ -232,14 +253,13 @@ export default function PaymentsMethods() {
         fullWidth
         maxWidth="sm"
       >
-        <NewPymentMethodForm 
+        <NewPymentMethodForm
           afterSubmit={() => {
             setOpenNewPaymentMethodDialog(false);
             commerce.updateSetCommerce();
           }}
           commerceId={commerce.userCommerce?.id || ''}
-        
-         />
+        />
       </Dialog>
 
       <Dialog
@@ -247,25 +267,24 @@ export default function PaymentsMethods() {
         onClose={() => setOpenUpdateDialog(false)}
         fullWidth
         maxWidth="sm"
-        >
-          <PaymentMethodForm
-            afterSubmit={() => {
-              setOpenUpdateDialog(false);
-              commerce.updateSetCommerce();
-            }}
-
-            commerceId={commerce.userCommerce?.id || ''}
-            update
-            id={selectedPaymentMethod?.id || ''}
-            name={selectedPaymentMethod?.name || ''}
-            credit={selectedPaymentMethod?.credit || false}
-            sell={selectedPaymentMethod?.sell || false}
-            purchase={selectedPaymentMethod?.purchase || false}
-            allowsInstallments={selectedPaymentMethod?.allowsInstallments}
-            maxInstallments={selectedPaymentMethod?.maxInstallments || 0}
-            comission={selectedPaymentMethod?.comission || 0}
-          />
-        </Dialog>
+      >
+        <PaymentMethodForm
+          afterSubmit={() => {
+            setOpenUpdateDialog(false);
+            commerce.updateSetCommerce();
+          }}
+          commerceId={commerce.userCommerce?.id || ''}
+          update
+          id={selectedPaymentMethod?.id || ''}
+          name={selectedPaymentMethod?.name || ''}
+          credit={selectedPaymentMethod?.credit || false}
+          sell={selectedPaymentMethod?.sell || false}
+          purchase={selectedPaymentMethod?.purchase || false}
+          allowsInstallments={selectedPaymentMethod?.allowsInstallments}
+          maxInstallments={selectedPaymentMethod?.maxInstallments || 0}
+          comission={selectedPaymentMethod?.comission || 0}
+        />
+      </Dialog>
     </>
   );
 }

@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import { findCommerceByUserId } from '@/app/actions/commerces';
+import {Tax} from '@/hooks/useTaxes';
+
 
 
 export interface PaymentMethod {
@@ -19,6 +21,7 @@ export interface PaymentMethod {
 
 
 export interface Commerce {
+  taxes: Tax[];
   paymentMethods: PaymentMethod[];
   id?: string;
   name?: string;
@@ -38,6 +41,7 @@ const defaultCommerce: Commerce = {
   identity: '',
   id: '',
   paymentMethods: [],
+  taxes: [],
 };
 
 function useCommerce() {
