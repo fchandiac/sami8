@@ -13,6 +13,7 @@ import {
   Alert,
   Dialog,
 } from '@mui/material';
+import { findUserByEmail } from '@/app/actions/auth';
 
 
 export default function LoginForm() {
@@ -46,8 +47,16 @@ export default function LoginForm() {
       setError('Credenciales incorrectas');
       setLoading(false);
     } else {
-      console.log('session', session);
+      await session;
+  
+      const mail = session.user.email;
+      const user = await findUserByEmail(mail);
+
+      if (user.role === 'admin') {
       router.push('/adminApp');
+      } else {
+        router.push('/salePointApp');
+      }
       setLoading(false);
     }
   };

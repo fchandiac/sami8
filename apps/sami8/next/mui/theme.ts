@@ -115,7 +115,7 @@ const theme = createTheme({
 
   palette: {
     primary: {
-      main: '#1d1d1d',
+      main: '#212121',
       contrastText: '#fff',
     },
     
@@ -123,7 +123,7 @@ const theme = createTheme({
       main: '#ff4081', // Un color secundario
     },
     // divider: '#ff4081',
-    divider: '#FFC1D5',
+    divider: '#ccc',
     background: {
       default: '#88C200',
     },

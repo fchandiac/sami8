@@ -1,9 +1,6 @@
-//id
-//commerceId
-//name
-//description
-import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, CreateDateColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Family } from './family.entity';
+import { Product } from './product.entity';
 
 @Entity()
 export class Category {
@@ -27,4 +24,12 @@ export class Category {
   
     @DeleteDateColumn({ type: 'timestamp' })
     deletedAt: Date;
+
+    // Relación muchos a uno con Family
+  @ManyToOne(() => Family, (family) => family.categories)
+  family: Family;
+
+  // Relación uno a muchos con Product
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[];
 }

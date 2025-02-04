@@ -23,8 +23,6 @@ export class CreatePricesListDto {
     
     @IsUUID()
     commerceId?: string; // ID del comercio asociado
-
-
 }
 
 

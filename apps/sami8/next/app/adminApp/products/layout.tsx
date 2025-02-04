@@ -11,7 +11,7 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
   const tabs = [
     { label: "Productos", path: "/adminApp/products" },
     { label: "Categorías", path: "/adminApp/products/categories" },
-    { label: "Pestaña 3", path: "/productos/tab3" },
+    { label: "Familias", path: "/adminApp/products/families" },
   ];
 
   // Determinar qué pestaña está activa
@@ -23,11 +23,29 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
 
   return (
     <Box>
-      <Tabs value={currentTab} onChange={handleChange} aria-label="Product Tabs">
+      {/* Barra de pestañas sticky */}
+      <Tabs
+        value={currentTab}
+        onChange={handleChange}
+        aria-label="Product Tabs"
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
+        sx={{
+          paddingX: 2,
+          position: 'sticky',
+          top: 60,
+          zIndex: 1000, // Asegurar que la barra esté por encima de otros elementos
+          bgcolor: 'background.paper', // Fondo para que no sea transparente
+          boxShadow: 1, // Opcional: sombra para resaltar la barra
+        }}
+      >
         {tabs.map((tab, index) => (
           <Tab key={index} label={tab.label} />
         ))}
       </Tabs>
+
+      {/* Contenido principal */}
       <Box sx={{ marginTop: 2 }}>{children}</Box>
     </Box>
   );

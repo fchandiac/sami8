@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useGlobalContext } from '@/globalContext';
 import { findCommerceByUserId } from '../../actions/commerces';
 
@@ -28,6 +29,23 @@ export default function Navbar({ onMenuClick, userId }: NavbarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState('');
   const { commerce } = useGlobalContext();
+
+  useEffect(() => {
+    if (pathname === '/adminApp/config') {
+      setPageTitle('Configuración');
+    } else if (pathname === '/adminApp/products') {
+      setPageTitle('Productos');
+    } else if (pathname === '/userApp/clients') {
+      setPageTitle('Clientes');
+    } else if (pathname === '/userApp/employees') {
+      setPageTitle('Empleados');
+    } else if (pathname === '/userApp/transactions') {
+      setPageTitle('Transacciones');
+    }
+  }, [pathname]);
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,11 +87,22 @@ export default function Navbar({ onMenuClick, userId }: NavbarProps) {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'center',
+            alignItems: 'center',
 
             width: '100%',
           }}
         >
+          <Typography
+           
+            fontWeight={300}
+            component="div"
+            sx={{ color: 'white', width: '100%' }}
+            textAlign={'right'}
+          >
+            {pageTitle}
+          </Typography>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"

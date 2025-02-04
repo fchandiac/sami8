@@ -75,7 +75,7 @@ export class CommerceService {
         // @ts-ignore
         id: user.commerceId,
       },
-      relations: ['paymentMethods', 'taxes'],
+      relations: ['paymentMethods', 'taxes', 'pricesLists'],
       order: {
         paymentMethods: {
           createdAt: 'DESC', // O 'DESC' para orden descendente

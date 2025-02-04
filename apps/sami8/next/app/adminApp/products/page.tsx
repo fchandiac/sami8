@@ -1,18 +1,69 @@
-'use client'
-import { Button } from '@mui/material'
-import React from 'react'
-import { useGlobalContext } from '@/globalContext'
-
+'use client';
+import {
+  Box,
+  Grid,
+  IconButton,
+  TextField,
+  InputAdornment,
+} from '@mui/material';
+import React from 'react';
+import { useGlobalContext } from '@/globalContext';
+import ProductCard from './ui/ProductCard';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search'; // Importamos el ícono de búsqueda
 
 export default function page() {
-  const { commerce } = useGlobalContext()
+  const { commerce } = useGlobalContext();
+  const cont = 12;
   return (
-    <Button variant="contained" color="primary"
-      onClick={() => {
-        console.log(commerce.userCommerce)
-      }}
-    >
-      test commerce
-    </Button>
-  )
+    <>
+      <Box
+        sx={{
+          padding: 1,
+          borderRadius: 1,
+          bgcolor: '#ffffff',
+          border: '1px solid #ccc',
+          boxShadow: 2,
+          marginX: 1,
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'right',
+            marginBottom: 1,
+            marginTop: 1,
+          }}
+        >
+          <TextField
+            sx={{
+              mr: 1,
+            }}
+            id="outlined-basic"
+            label="Buscar producto"
+            variant="outlined"
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon /> {/* Agregamos el ícono de lupa */}
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <IconButton>
+            <AddIcon />
+          </IconButton>
+        </Box>
+        <Grid container spacing={1}>
+          {[...Array(cont)].map((_, index) => (
+            <Grid item xs={12} sm={12} md={6} lg={4} key={index}>
+              <ProductCard />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </>
+  );
 }

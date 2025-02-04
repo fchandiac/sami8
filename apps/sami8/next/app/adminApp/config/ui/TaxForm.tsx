@@ -85,7 +85,7 @@ export default function TaxForm({
   }
 
   return (
-    <Box p={2}>
+
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -164,6 +164,5 @@ export default function TaxForm({
           </Grid>
         </Grid>
       </form>
-    </Box>
   );
 }

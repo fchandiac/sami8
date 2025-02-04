@@ -83,7 +83,9 @@ export default function Taxes() {
                   backgroundColor: '#f5f5f5', // Fondo fijo para evitar transparencias al desplazar
                   zIndex: 2, // Prioridad visual sobre otras celdas
                 }}
-              >Nombre</TableCell>
+              >
+                Nombre
+              </TableCell>
               <TableCell>Porcentaje</TableCell>
               <TableCell>Ventas</TableCell>
               <TableCell>Compras</TableCell>
@@ -100,7 +102,9 @@ export default function Taxes() {
                     backgroundColor: '#fff', // Fondo fijo para evitar transparencias al desplazar
                     zIndex: 2, // Prioridad visual sobre otras celdas
                   }}
-                >{tax.name}</TableCell>
+                >
+                  {tax.name}
+                </TableCell>
                 <TableCell>{tax.percentage}</TableCell>
                 <TableCell>
                   {tax.sell ? (
@@ -129,7 +133,6 @@ export default function Taxes() {
                         setSelectedTax(tax);
                         setOpenUpdateDialog(true);
                       }}
-               
                       aria-label="edit"
                     >
                       <EditIcon />
@@ -140,7 +143,6 @@ export default function Taxes() {
                         setOpenDeleteDialog(true);
                       }}
                       disabled={!tax.canBeDeleted}
-              
                       aria-label="delete"
                     >
                       <DeleteIcon />
@@ -159,14 +161,16 @@ export default function Taxes() {
         fullWidth
         maxWidth="sm"
       >
-        <TaxForm
-          afterSubmit={() => {
-            setOpenNewTaxDialog(false);
-            commerce.updateSetCommerce();
-          }}
-          commerceId={commerce.userCommerce.id || ''}
-          update={false}
-        />
+        <Box p={1}>
+          <TaxForm
+            afterSubmit={() => {
+              setOpenNewTaxDialog(false);
+              commerce.updateSetCommerce();
+            }}
+            commerceId={commerce.userCommerce.id || ''}
+            update={false}
+          />
+        </Box>
       </Dialog>
 
       <Dialog

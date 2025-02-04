@@ -5,6 +5,17 @@ import {Tax} from '@/hooks/useTaxes';
 
 
 
+
+
+
+interface PriceList {
+  id: string;
+  name: string;
+  canBeDeleted: boolean;
+}
+
+
+
 export interface PaymentMethod {
   id?: string;
   name: string;
@@ -23,6 +34,7 @@ export interface PaymentMethod {
 export interface Commerce {
   taxes: Tax[];
   paymentMethods: PaymentMethod[];
+  pricesLists: PriceList[];
   id?: string;
   name?: string;
   rut?: string;
@@ -42,6 +54,7 @@ const defaultCommerce: Commerce = {
   id: '',
   paymentMethods: [],
   taxes: [],
+  pricesLists: [],
 };
 
 function useCommerce() {

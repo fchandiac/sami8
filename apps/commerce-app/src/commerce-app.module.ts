@@ -12,7 +12,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Tax } from 'libs/entities/commerce/tax.entity';
 import { TaxService } from './tax/tax.service';
 import { TaxController } from './tax/tax.controller';
-import { PricesList } from 'libs/entities/commerce/pricesList.entity.';
+import { PricesList } from 'libs/entities/commerce/prices-list.entity';
+import { PricesListService } from './pricesList/prices-list.service';
+import { PicesListController } from './pricesList/prices-list.controller';
+
 
 
 
@@ -44,8 +47,8 @@ import { PricesList } from 'libs/entities/commerce/pricesList.entity.';
       },
     ]),
   ],
-  controllers: [CommerceController, PaymentMethodController, TaxController], // Aquí definimos todos los controladores
-  providers: [ CommerceService, PaymentMethodService, TaxService],
+  controllers: [CommerceController, PaymentMethodController, TaxController, PicesListController], // Aquí definimos todos los controladores
+  providers: [ CommerceService, PaymentMethodService, TaxService, PricesListService], // Aquí definimos todos los servicios
   exports: [] // Proveedores para todos los servicios
 })
 

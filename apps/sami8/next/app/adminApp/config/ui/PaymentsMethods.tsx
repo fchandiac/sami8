@@ -104,7 +104,7 @@ export default function PaymentsMethods() {
               <TableCell>Comisión</TableCell>
               <TableCell>Venta</TableCell>
               <TableCell>Compra</TableCell>
-              <TableCell></TableCell>
+              <TableCell>typo efetctivo, transfer, dispositivo de pago, documento</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

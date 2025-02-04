@@ -10,15 +10,28 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const router = useRouter();
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: '#f9f9f9' }}>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: '#f9f9f9',
+      }}
+    >
       <Container maxWidth="md">
         <Box textAlign="center" mb={4}>
           <StorefrontIcon sx={{ fontSize: 80, color: 'primary.main' }} />
-          <Typography variant="h3" component="h1" fontWeight="bold" gutterBottom>
+          <Typography
+            variant="h3"
+            component="h1"
+            fontWeight="bold"
+            gutterBottom
+          >
             Bienvenido a FlowStore
           </Typography>
           <Typography variant="h6" color="text.secondary">
-           Gestiona tu negocio de manera eficiente y aumenta tus ventas.
+            Gestiona tu negocio de manera eficiente y aumenta tus ventas.
           </Typography>
         </Box>
         <Grid container spacing={2} justifyContent="center">
@@ -28,21 +41,16 @@ export default function Home() {
               fullWidth
               size="large"
               sx={{
-       
                 bgcolor: 'primary.main',
                 ':hover': { bgcolor: 'primary.dark' },
               }}
-
               onClick={() => {
                 router.push('/sign-in');
               }}
-     
-              
             >
               Ingresar
             </Button>
           </Grid>
-       
         </Grid>
       </Container>
     </Box>

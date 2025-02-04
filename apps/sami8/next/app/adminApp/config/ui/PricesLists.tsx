@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { useGlobalContext } from '@/globalContext';
 
 interface PriceList {
   id: string;
@@ -24,26 +25,17 @@ interface PriceList {
   canBeDeleted: boolean;
 }
 
-const initialPriceLists: PriceList[] = [
-  {
-    id: '1',
-    name: 'Lista de precios 1',
-    canBeDeleted: false,
-  },
-  {
-    id: '2',
-    name: 'Lista de precios 2',
-    canBeDeleted: true,
-  },
-  {
-    id: '3',
-    name: 'Lista de precios 3',
-    canBeDeleted: true,
-  },
-];
 
 export default function PricesLists() {
-  const [priceLists, setPriceLists] = useState(initialPriceLists);
+  const { commerce } = useGlobalContext();
+  const [priceLists, setPriceLists] = useState<PriceList[]>([]);
+
+  useEffect(() => {
+    if (commerce) {
+      setPriceLists(commerce.userCommerce.pricesLists);
+    }
+  }, [commerce.userCommerce]);
+
 
 
   return (

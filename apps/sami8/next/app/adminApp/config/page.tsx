@@ -44,11 +44,6 @@ export default function ConfigPage() {
               <PricesLists />
             </Box>
           </Grid>
-          <Grid item>
-            <Box p={1} boxShadow={2} borderRadius={1} m={1} bgcolor={'#ffffff'}>
-              {/* <PricesLists /> */}
-            </Box>
-          </Grid>
         </Grid>
       </Container>
     </>
