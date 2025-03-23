@@ -39,4 +39,14 @@ export class TaxController {
     const tax = this.commerceCliente.send<any>({ cmd: 'delete-tax' }, id);
     return lastValueFrom(tax); // Convierte el Observable en una Promesa
   }
+
+  //  @MessagePattern({ cmd: 'find-all-taxes-by-commerce-id' })
+
+  @Post('findAllTaxesByCommerceId')
+  async findAllTaxesByCommerceId(@Query('commerceId') commerceId: string): Promise<any> {
+    // Llama al microservicio para obtener todos los impuestos de un comercio
+    const taxes = this.commerceCliente.send<any>({ cmd: 'find-all-taxes-by-commerce-id' }, commerceId);
+    return lastValueFrom(taxes); // Convierte el Observable en una Promesa
+  }
+ 
 }

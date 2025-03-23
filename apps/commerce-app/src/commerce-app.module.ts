@@ -1,4 +1,3 @@
-
 import { Module } from '@nestjs/common';
 import { CommerceService } from './commerce/commerce.service';
 import { CommerceController } from './commerce/commerce.controller';
@@ -15,13 +14,17 @@ import { TaxController } from './tax/tax.controller';
 import { PricesList } from 'libs/entities/commerce/prices-list.entity';
 import { PricesListService } from './pricesList/prices-list.service';
 import { PicesListController } from './pricesList/prices-list.controller';
-
-
-
+import { Customer } from 'libs/entities/commerce/customer.entity';
+import { CustomerService } from './customer/customer.service';
+import { CustomerController } from './customer/customer.controller';
+import { Provider } from 'libs/entities/commerce/provider.entity';
+import { ProviderService } from './provider/provider.service';
+import { ProviderController } from './provider/provider.controller';
 
 @Module({
-  imports: [ // Importamos los servicios
-    TypeOrmModule.forFeature([Commerce, PaymentMethod, Tax, PricesList]),  // Importamos las entidades
+  imports: [
+    // Importamos los servicios
+    TypeOrmModule.forFeature([Commerce, PaymentMethod, Tax, PricesList, Customer, Provider]), // Importamos las entidades
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: envs.database.host,
@@ -29,7 +32,7 @@ import { PicesListController } from './pricesList/prices-list.controller';
       username: envs.database.user,
       password: envs.database.password,
       database: envs.database.commerceDatabaseName,
-      entities: [Commerce, PaymentMethod, Tax, PricesList],
+      entities: [Commerce, PaymentMethod, Tax, PricesList, Customer, Provider],
       synchronize: true,
       //dropSchema: true,
     }),
@@ -46,12 +49,36 @@ import { PicesListController } from './pricesList/prices-list.controller';
         },
       },
     ]),
+    // Registro del cliente RabbitMQ para PRODUCT_SERVICE
+    ClientsModule.register([
+      {
+        name: 'PRODUCT_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: [envs.rabbitmq.url],
+          queue: 'product_queue',
+          noAck: true,
+          queueOptions: { durable: true },
+        },
+      },
+    ]),
   ],
-  controllers: [CommerceController, PaymentMethodController, TaxController, PicesListController], // Aquí definimos todos los controladores
-  providers: [ CommerceService, PaymentMethodService, TaxService, PricesListService], // Aquí definimos todos los servicios
-  exports: [] // Proveedores para todos los servicios
+  controllers: [
+    CommerceController,
+    PaymentMethodController,
+    TaxController,
+    PicesListController,
+    CustomerController,
+    ProviderController,
+  ], // Aquí definimos todos los controladores
+  providers: [
+    CommerceService,
+    PaymentMethodService,
+    TaxService,
+    PricesListService,
+    CustomerService,
+    ProviderService,
+  ], // Aquí definimos todos los servicios
+  exports: [], // Proveedores para todos los servicios
 })
-
-
-
 export class CommerceAppModule {}

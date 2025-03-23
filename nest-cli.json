@@ -54,6 +54,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/product-app/tsconfig.app.json"
       }
+    },
+    "transaction-app": {
+      "type": "application",
+      "root": "apps/transaction-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/transaction-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/transaction-app/tsconfig.app.json"
+      }
     }
   }
 }

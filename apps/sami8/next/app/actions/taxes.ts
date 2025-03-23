@@ -74,3 +74,19 @@ export async function deleteTax(tax: DeleteTaxProps): Promise<any> {
   });
   return response.json();
 }
+
+//http://localhost:8001/tax/findAllTaxesByCommerceId?commerceId=0572b1be-276f-494e-a148-ccc46183a2e2
+
+interface FindAllTaxesByCommerceIdProps {
+  commerceId: string;
+}
+
+export async function findAllTaxesByCommerceId(tax: FindAllTaxesByCommerceIdProps): Promise<any> {
+  const response = await fetch(`${backentUrl}/tax/findAllTaxesByCommerceId?commerceId=${tax.commerceId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+}

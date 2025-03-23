@@ -13,6 +13,7 @@ import * as joi from 'joi';
 // DATABASE_PASSWORD=fenasantma
 
 // AUTH_DATABASE_NAME=auth-sami-app
+// PRODUCT_DATABASE_NAME
 
 
 
@@ -27,6 +28,7 @@ interface EnvVars {
     DATABASE_PASSWORD: string;
     AUTH_DATABASE_NAME: string;
     COMMERCE_DATABASE_NAME: string;
+    PRODUCT_DATABASE_NAME: string;
 
 
 
@@ -43,6 +45,7 @@ const envVarsSchema: joi.ObjectSchema = joi.object({
     DATABASE_PASSWORD: joi.string().required(),
     AUTH_DATABASE_NAME: joi.string().required(),
     COMMERCE_DATABASE_NAME: joi.string().required(),
+    PRODUCT_DATABASE_NAME: joi.string().required(),
 
     
     
@@ -81,6 +84,7 @@ export const envs = {
         user: envVars.DATABASE_USER,
         password: envVars.DATABASE_PASSWORD,
         authDatabaseName: envVars.AUTH_DATABASE_NAME,
-        commerceDatabaseName: envVars.COMMERCE_DATABASE_NAME
+        commerceDatabaseName: envVars.COMMERCE_DATABASE_NAME,
+        productDatabaseName: envVars.PRODUCT_DATABASE_NAME,
     },
 };

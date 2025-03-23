@@ -11,8 +11,11 @@ import { Category } from './category.entity';
 
 @Entity('families')
 export class Family {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column('uuid', { default: null })
+  commerceId: string;
 
   @Column()
   name: string;

@@ -4,6 +4,8 @@ import { CommerceController } from './commerce.controller';
 import { PaymentMethodController } from './payment-method.controller';
 import { TaxController } from './tax.controller';
 import { PricesListController } from './prices-list.controller';
+import { CustomerController } from './customer.controller';
+import { ProviderController } from './provider.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'libs/config';
 
@@ -29,6 +31,8 @@ import { envs } from 'libs/config';
     PaymentMethodController,
     TaxController,
     PricesListController,
+    CustomerController,
+    ProviderController,
   ], // Controlador para manejar las rutas relacionadas con commerce
 })
 export class CommerceModule {}

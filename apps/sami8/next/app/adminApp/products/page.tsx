@@ -5,15 +5,18 @@ import {
   IconButton,
   TextField,
   InputAdornment,
+  Dialog,
 } from '@mui/material';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '@/globalContext';
 import ProductCard from './ui/ProductCard';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search'; // Importamos el ícono de búsqueda
+import NewProductForm from './ui/NewProductForm';
 
 export default function page() {
   const { commerce } = useGlobalContext();
+  const [openNewProductDialog, setOpenNewProductDialog] = useState(false);
   const cont = 12;
   return (
     <>
@@ -52,7 +55,10 @@ export default function page() {
             }}
           />
 
-          <IconButton>
+          <IconButton
+            onClick={() => setOpenNewProductDialog(true)}
+            color="primary"
+          >
             <AddIcon />
           </IconButton>
         </Box>
@@ -64,6 +70,17 @@ export default function page() {
           ))}
         </Grid>
       </Box>
+
+      <Dialog
+        open={openNewProductDialog}
+        onClose={() => setOpenNewProductDialog(false)}
+        fullWidth
+        maxWidth="md"
+      >
+        <Box p={1}>
+          <NewProductForm />
+        </Box>
+      </Dialog>
     </>
   );
 }

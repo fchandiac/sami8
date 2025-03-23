@@ -13,6 +13,7 @@ import { CreateCommerceDto } from 'libs/dto/commerce/commerce/create-commerce.dt
 import { UpdateBasicInformationCommerceDto } from 'libs/dto/commerce/commerce/update-basic-information-commerce.dto';
 import { PaymentMethodService } from '../paymentMethod/payment-method.service';
 import { TaxService } from '../tax/tax.service';
+import { CreateFamilyDto } from 'libs/dto/products/create-family.dto';
 
 @Injectable()
 export class CommerceService {
@@ -20,6 +21,7 @@ export class CommerceService {
     @InjectRepository(Commerce)
     private readonly commerceRepository: Repository<Commerce>,
     @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
+    @Inject('PRODUCT_SERVICE') private readonly productClient: ClientProxy,
     private readonly paymentMethodService: PaymentMethodService,
     private readonly taxService: TaxService,
   ) {}
@@ -30,24 +32,29 @@ export class CommerceService {
 
   async createCommerce(dto: CreateCommerceDto): Promise<Commerce> {
     const { name, rut, identity } = dto;
+
+
     const commerce = this.commerceRepository.create({
       name,
       rut,
       identity,
     });
+
+
     const newCommerce = await this.commerceRepository.save(commerce);
 
-    const newPaymentMethod = await this.paymentMethodService.createPaymentMethod({
-      name: 'Efectivo',
-      credit: false,
-      allowsInstallments: false,
-      maxInstallments: 0,
-      comission: 0,
-      canBeDeleted: false,
-      commerceId: newCommerce.id,
-      sell: true,
-      purchase: true,
-    });
+    const newPaymentMethod =
+      await this.paymentMethodService.createPaymentMethod({
+        name: 'Efectivo',
+        credit: false,
+        allowsInstallments: false,
+        maxInstallments: 0,
+        comission: 0,
+        canBeDeleted: false,
+        commerceId: newCommerce.id,
+        sell: true,
+        purchase: true,
+      });
 
     const newTax = await this.taxService.createTax({
       name: 'IVA',
@@ -58,8 +65,39 @@ export class CommerceService {
       commerceId: newCommerce.id,
     });
 
-    return newCommerce;
+    const newFamily = await this.productClient
+      .send<{ id: string }>(
+        { cmd: 'create-family' },
+        {
+          dto: {
+            name: 'General',
+            description: 'Familia general',
+            commerceId: newCommerce.id,
+          },
+        },
+      )
+      .toPromise();
 
+      const familyId = newFamily.id;
+      const commerceId = newCommerce.id;
+
+
+      
+
+  
+    const newCategory = await this.productClient
+      .send<string>(
+        { cmd: 'create-category' },
+        {
+            name: 'General',
+            commerceId: newCommerce.id,
+            description: 'Categoria general',
+            familyId: familyId,
+        },
+      )
+      .toPromise();
+
+    return newCommerce;
   }
 
   async findCommerceByUserId(userId: string): Promise<Commerce> {
@@ -82,7 +120,7 @@ export class CommerceService {
         },
         taxes: {
           createdAt: 'DESC',
-        }
+        },
       },
     });
 

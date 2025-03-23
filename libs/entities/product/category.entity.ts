@@ -4,16 +4,16 @@ import { Product } from './product.entity';
 
 @Entity()
 export class Category {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-    @Column()
-    commerceId: number;
+    @Column('uuid')
+    commerceId: string;
 
     @Column()
     name: string;
 
-    @Column()
+    @Column({ nullable: true, default: null })
     description: string;
 
     @CreateDateColumn({ type: 'timestamp' })

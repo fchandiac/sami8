@@ -3,19 +3,26 @@ import { Category } from './category.entity';
 
 @Entity('products')
 export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  name: string;
-
-  @Column()
-  description: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   code: string;
 
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  description: string;
+
+  purcharseGrossPrice: number;
+
+  @Column('uuid')
+  commerceId: string;
+
+
   // Relación muchos a uno con Category
   @ManyToOne(() => Category, (category) => category.products)
   category: Category;
+  salePrices: any;
 }

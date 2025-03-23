@@ -69,4 +69,21 @@ export class TaxController {
         });
         }
     }
+
+
+
+    @MessagePattern({ cmd: 'find-all-taxes-by-commerce-id' })
+    async findAllTaxesByCommerceId(
+        @Payload() data: any,
+        @Ctx() context: RmqContext,
+    ): Promise<any> {
+        try {
+        return this.taxService.findAllTaxesByCommerceId(data.commerceId);
+        } catch (error) {
+        throw new RpcException({
+            statusCode: 500,
+            message: error.message,
+        });
+        }
+    }
 }

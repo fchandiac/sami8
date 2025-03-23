@@ -16,6 +16,8 @@ import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 
+
+
 interface UserSideBarProps {
   open: boolean;
   toggleDrawer: (open: boolean) => void;
@@ -118,7 +120,7 @@ export default function SideBar({
                 width: '100%',
               }}
               onClick={() => {
-                router.push('/adminApp/users');
+                router.push('/adminApp/customers');
                 toggleDrawer(false);
               }}
             >
@@ -130,7 +132,7 @@ export default function SideBar({
                 width: '100%',
               }}
               onClick={() => {
-                router.push('/adminApp/users');
+                router.push('/adminApp/providers');
                 toggleDrawer(false);
               }}
             >

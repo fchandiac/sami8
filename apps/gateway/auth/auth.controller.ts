@@ -51,13 +51,20 @@ export class AuthController {
     //@ts-ignore
     return this.client.send<string>({ cmd: 'sign-in' }, { dto });
   }
-
- 
-
+  
    //findUserByEmail
     @Get('findUserByEmail')
     async findUserByEmail(@Query() data:string): Promise<string> {
       //@ts-ignore
       return this.client.send<string>({ cmd: 'find-user-by-email' }, { data });
     }
+
+    //  @MessagePattern({ cmd: 'find-all-users-by-commerce-id' })
+    @Get('findAllByCommerceId')
+    async findAllByCommerceId(@Query() commerceId: string): Promise<string> {
+      //@ts-ignore
+      return this.client.send<string>({ cmd: 'find-all-users-by-commerce-id' }, commerceId );
+    }
+
+    
 }

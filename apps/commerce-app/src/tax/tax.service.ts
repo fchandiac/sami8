@@ -84,5 +84,15 @@ export class TaxService {
     return this.taxRepository.remove(tax);
   }
 
+  async findAllTaxesByCommerceId(commerceId: string): Promise<Tax[]> {
+    return this.taxRepository.find({
+      where: {
+        commerce: {
+          id: commerceId,
+        },
+      },
+    });
+  }
+
   
 }

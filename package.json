@@ -7,8 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev:comm": "nest start commerce-app",
-    "dev:all": "nest start commerce-app --watch & nest start gateway --watch & nest start auth-app --watch & nest start sami8 --watch",
-    "dev:all-no-next": "nest start gateway --watch & nest start auth-app --watch",
+    "dev:all": "nest start commerce-app --watch & nest start gateway --watch & nest start auth-app --watch & nest start product-app --watch & nest start sami8 --watch",
+    "dev:all-no-next": "nest start commerce-app --watch & nest start gateway --watch & nest start auth-app --watch & nest start product-app",
     "build": "nest build commerce-app",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
@@ -23,6 +23,9 @@
     "test:e2e": "jest --config ./apps/sami8/test/jest-e2e.json"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/x-data-grid": "^7.25.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/microservices": "^10.4.7",

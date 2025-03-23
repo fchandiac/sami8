@@ -232,5 +232,19 @@ export class AuthAppService {
     }
   }
 
+  async findAllByCommerceId(commerceId: string): Promise<User[]> {
+    try {
+      const users = await this.userRepository.find({
+        where: { commerceId },
+      });
+      return users;
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 500,
+        message: 'Internal server error',
+      });
+    }
+  }
+
 
 }

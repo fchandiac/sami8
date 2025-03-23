@@ -1,0 +1,77 @@
+apps
+├── auth-app
+│   ├── src
+│   └── tsconfig.app.json
+├── commerce-app
+│   ├── src
+│   └── tsconfig.app.json
+├── gateway
+│   ├── auth
+│   ├── commerce
+│   ├── src
+│   └── tsconfig.app.json
+├── product-app
+│   ├── src
+│   │   ├── category
+│   │   │   ├── category.controller.ts
+│   │   │   └── category.service.ts
+│   │   ├── family
+│   │   │   ├── family.controller.ts
+│   │   │   └── family.service.ts
+│   │   ├── product
+│   │   │   ├── product.controller.ts
+│   │   │   └── product.service.ts
+│   │   ├── sale-prices
+│   │   ├── main.ts
+│   │   ├── product-app.module.ts
+│   └── tsconfig.app.json
+├── sami8
+│   ├── next
+│   ├── src
+│   └── tsconfig.app.json
+
+libs
+├── config
+│   ├── envs.ts
+│   └── index.ts
+├── dto
+│   ├── auth
+│   │   └── user
+│   ├── commerce
+│   │   ├── commerce
+│   │   ├── paymentMethod
+│   │   └── tax
+│   ├── common
+│   │   ├── by-id.dto.ts
+│   │   ├── login.dto.ts
+│   │   └── search-term.dto.ts
+│   └── product
+│       ├── category.dto.ts
+│       ├── price-list.dto.ts
+│       ├── product.dto.ts
+│       ├── sale-price.dto.ts
+│       └── tax.dto.ts
+├── entities
+│   ├── auth
+│   │   └── user.entity.ts
+│   ├── commerce
+│   │   ├── commerce.entity.ts
+│   │   ├── payment-method.entity.ts
+│   │   └── tax.entity.ts
+│   ├── product
+│   │   ├── category.entity.ts
+│   │   ├── price-list.entity.ts
+│   │   ├── product.entity.ts
+│   │   ├── sale-price.entity.ts
+│   │   └── tax.entity.ts
+│   ├── record
+│   │   └── record.entity.ts
+│   ├── salePoint
+│   │   ├── cash-register.entity.ts
+│   │   ├── cash-register-movement.entity.ts
+│   │   └── sale-point.entity.ts
+│   ├── stock
+│   │   ├── card.entity.ts
+│   │   └── storage.entity.ts
+└── enums
+    └── enums.ts

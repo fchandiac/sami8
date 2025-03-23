@@ -72,4 +72,14 @@ export class AuthAppController {
     return this.authAppService.findUserById(data);
   }
 
+  //  async findAllByCommerceId(commerceId: string): Promise<User[]> {
+
+  @MessagePattern({ cmd: 'find-all-users-by-commerce-id' })
+  async findAllByCommerceId(
+    @Payload() data: any,
+    @Ctx() context: RmqContext,
+  ): Promise<User[]> {
+    return this.authAppService.findAllByCommerceId(data.commerceId);
+  }
+
 }

@@ -15,7 +15,6 @@ export const signIn = async (userName: string, password: string) => {
 };
 
 
-
 export const findUserByEmail = async (email: string) => {
   const response = await fetch(`${authUrl}/findUserByEmail?email=${email}`, {
     method: 'GET',
